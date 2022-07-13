@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ function Register() {
       toast.error(message);
     }
 
-    // Redirect When Logged In
+    // Redirect when logged in
     if (isSuccess || user) {
       navigate("/");
     }
@@ -58,11 +59,15 @@ function Register() {
     }
   };
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <section className="heading">
         <h1>
-          <FaUser /> Register {user}
+          <FaUser /> Register
         </h1>
         <p>Please create an account</p>
       </section>
@@ -74,8 +79,8 @@ function Register() {
               type="text"
               className="form-control"
               id="name"
-              value={name}
               name="name"
+              value={name}
               onChange={onChange}
               placeholder="Enter your name"
               required
@@ -86,8 +91,8 @@ function Register() {
               type="email"
               className="form-control"
               id="email"
-              value={email}
               name="email"
+              value={email}
               onChange={onChange}
               placeholder="Enter your email"
               required
@@ -98,10 +103,10 @@ function Register() {
               type="password"
               className="form-control"
               id="password"
-              value={password}
               name="password"
+              value={password}
               onChange={onChange}
-              placeholder="Enter your password"
+              placeholder="Enter password"
               required
             />
           </div>
@@ -110,8 +115,8 @@ function Register() {
               type="password"
               className="form-control"
               id="password2"
-              value={password2}
               name="password2"
+              value={password2}
               onChange={onChange}
               placeholder="Confirm password"
               required
